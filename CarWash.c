@@ -7,6 +7,7 @@ typedef struct {
     int front, rear, Station_Capacity;
 } Washing_Queue;
 
+// Function to initialize washing queue
 void Creating_Washing_Queue(Washing_Queue *Stations, int Station_Size) {
     Stations->front = -1;
     Stations->rear = -1;
@@ -14,14 +15,17 @@ void Creating_Washing_Queue(Washing_Queue *Stations, int Station_Size) {
     Stations->Station = (int *)malloc(Station_Size * sizeof(int));
 }
 
+// Function to check if washing station is empty
 int Washing_Station_isEmpty(Washing_Queue *Stations) {
     return (Stations->front == -1 && Stations->rear == -1);
 }
 
+// Function to check if washing station is full
 int Washing_Station_isFull(Washing_Queue *Stations) {
     return ((Stations->rear + 1) % Stations->Station_Capacity == Stations->front);
 }
 
+// Function to enqueue a car for washing
 void Washing_enqueue(Washing_Queue *Stations, int value) {
     if (Washing_Station_isFull(Stations)) {
         printf("Car Stations are occupied\n");
@@ -37,6 +41,7 @@ void Washing_enqueue(Washing_Queue *Stations, int value) {
     Stations->Station[Stations->rear] = value;
 }
 
+// Function to dequeue a car from the washing station
 int Washing_dequeue(Washing_Queue *Stations) {
     int dequeuedValue;
     if (Washing_Station_isEmpty(Stations)) {
@@ -59,24 +64,24 @@ typedef struct Node {
     struct Node *next;
 } Node;
 
-// Queue structure
+// Queue structure for call log
 typedef struct {
     Node *front;
     Node *rear;
 } Log_Data;
 
-// Creating call log
+// Function to initialize call log queue
 void Create_Log_Data(Log_Data *Car_Queue) {
     Car_Queue->front = NULL;
     Car_Queue->rear = NULL;
 }
 
-// is Call log empty
+// Function to check if call log is empty
 int Call_log_isEmpty(Log_Data *Car_Queue) {
     return (Car_Queue->front == NULL);
 }
 
-// adding car to waiting list
+// Function to enqueue a car to the waiting list (call log)
 void Call_log_enqueue(Log_Data *Car_Queue, int value) {
     Node *newNode = (Node *)malloc(sizeof(Node));
     if (newNode == NULL) {
@@ -94,7 +99,7 @@ void Call_log_enqueue(Log_Data *Car_Queue, int value) {
     }
 }
 
-// removing car
+// Function to dequeue a car from the waiting list (call log)
 int Call_log_dequeue(Log_Data *Car_Queue) {
     if (Call_log_isEmpty(Car_Queue)) {
         printf("Queue is empty. Unable to dequeue.\n");
@@ -110,6 +115,7 @@ int Call_log_dequeue(Log_Data *Car_Queue) {
     return dequeuedValue;
 }
 
+// Function to display all cars in the waiting list (call log)
 void displayQueue(Log_Data *Car_Queue) {
     if (Call_log_isEmpty(Car_Queue)) {
         printf("\nWaiting List is Empty.\n");
@@ -124,6 +130,7 @@ void displayQueue(Log_Data *Car_Queue) {
     printf("\n");
 }
 
+// Function to check if a car is already in the washing station
 int CarinWashing(Washing_Queue *Stations, int value) {
     for (int i = Stations->front; i <= Stations->rear; i++) {
         if (Stations->Station[i] == value) {
@@ -133,6 +140,7 @@ int CarinWashing(Washing_Queue *Stations, int value) {
     return 0;
 }
 
+// Function to check if a car is already in the call log
 int CarinLogData(Log_Data *Car_Queue, int value) {
     Node *current = Car_Queue->front;
     while (current != NULL) {
@@ -144,6 +152,7 @@ int CarinLogData(Log_Data *Car_Queue, int value) {
     return 0;
 }
 
+// Main function to handle user input and manage car washing and waiting lists
 int main() {
     int size;
     printf("Enter the no of stations : ");
